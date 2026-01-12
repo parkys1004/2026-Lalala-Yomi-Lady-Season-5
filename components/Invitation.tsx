@@ -23,12 +23,14 @@ const Invitation: React.FC = () => {
         
         <div className="flex justify-center gap-6 relative z-10">
             <motion.a 
-                href="tel:010-0000-0000" 
+                href="https://cafe.naver.com/051salsa/52587"
+                target="_blank"
+                rel="noopener noreferrer" 
                 whileHover={{ scale: 1.1, boxShadow: "0 0 25px rgba(219, 39, 119, 0.5)" }}
                 whileTap={{ scale: 0.95 }}
                 className="btn-primary px-10 py-4 rounded-full font-bold text-lg shadow-lg flex items-center gap-2"
             >
-                <i className="fas fa-phone-alt"></i> 연락주세요 🙏
+                <i className="fas fa-mouse-pointer"></i> 파티신청하러가기
             </motion.a>
         </div>
     </motion.section>
