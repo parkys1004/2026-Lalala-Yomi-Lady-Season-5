@@ -2,6 +2,51 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 
+const CopyableExample = ({ label, text }: { label: string; text: string }) => {
+  const [isCopied, setIsCopied] = useState(false);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(text).then(() => {
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2000);
+    });
+  };
+
+  return (
+    <motion.div 
+      whileHover={{ y: -5 }} 
+      className="bg-white/5 p-4 rounded-lg border border-dashed border-white/20 relative group"
+    >
+        <div className="flex justify-between items-center mb-2">
+            <p className="text-sm text-pink-500 font-bold">{label}</p>
+            <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={handleCopy}
+                className={`text-xs px-3 py-1.5 rounded-md transition-colors flex items-center gap-1.5 ${
+                  isCopied 
+                    ? 'bg-green-500/20 text-green-400 border border-green-500/30' 
+                    : 'bg-white/10 hover:bg-white/20 text-gray-300 border border-white/10'
+                }`}
+            >
+                {isCopied ? (
+                    <>
+                        <i className="fas fa-check"></i> <span>복사됨</span>
+                    </>
+                ) : (
+                    <>
+                        <i className="fas fa-copy"></i> <span>복사</span>
+                    </>
+                )}
+            </motion.button>
+        </div>
+        <code className="text-sm block bg-black/20 p-3 rounded break-all text-gray-200 font-mono">
+          {text}
+        </code>
+    </motion.div>
+  );
+};
+
 const Ticket: React.FC = () => {
   const [copied, setCopied] = useState(false);
 
@@ -92,14 +137,14 @@ const Ticket: React.FC = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <motion.div whileHover={{ y: -5 }} className="bg-white/5 p-4 rounded-lg border border-dashed border-white/20">
-                <p className="text-sm text-pink-500 mb-2 font-bold">예시 1</p>
-                <code className="text-sm block bg-black/20 p-2 rounded">요미/ 라/ 워크샵1번,2번,3번 + 파티/ 입완</code>
-            </motion.div>
-            <motion.div whileHover={{ y: -5 }} className="bg-white/5 p-4 rounded-lg border border-dashed border-white/20">
-                <p className="text-sm text-pink-500 mb-2 font-bold">예시 2</p>
-                <code className="text-sm block bg-black/20 p-2 rounded">라울/ 로/ 파티만/ 입완</code>
-            </motion.div>
+            <CopyableExample 
+                label="예시 1" 
+                text="요미/ 라/ 워크샵1번,2번,3번 + 파티/ 입완" 
+            />
+            <CopyableExample 
+                label="예시 2" 
+                text="라울/ 로/ 파티만/ 입완" 
+            />
         </div>
     </section>
   );
